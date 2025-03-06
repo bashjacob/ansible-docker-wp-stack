@@ -7,33 +7,33 @@
     - secrets.yml
 
   tasks:
-    - name: 'Install required packages'
-      ansible.builtin.dnf:
-        name:
-          - docker
-          #- python3-pip
-        state: latest
+  #   - name: 'Install required packages'
+  #     ansible.builtin.dnf:
+  #       name:
+  #         - docker
+  #         #- python3-pip
+  #       state: latest
+  #
+  #   - name: 'Download latest docker-compose'
+  #     ansible.builtin.get_url:
+  #       url: https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64
+  #       dest: /usr/local/bin/docker-compose
+  #       mode: '0755'
+  #
+  #   - name: 'Start and enable docker service'
+  #     ansible.builtin.service:
+  #       name: docker
+  #       state: started
+  #       enabled: true
 
-    - name: 'Download latest docker-compose'
-      ansible.builtin.get_url:
-        url: https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64
-        dest: /usr/local/bin/docker-compose
-        mode: '0755'
-    
-    - name: 'Start and enable docker service'
-      ansible.builtin.service:
-        name: docker
-        state: started
-        enabled: true
-
-    - name: 'Create project directory'
-      ansible.builtin.file:
-        path: "/opt/wordpress/{{ item }}"
-        state: directory
-      loop:
-        - ""
-        - wordpress
-        - db
+    # - name: 'Create project directory'
+    #   ansible.builtin.file:
+    #     path: "/opt/wordpress/{{ item }}"
+    #     state: directory
+    #   loop:
+    #     - ""
+    #     - wordpress
+    #     - db
 
     - name: 'Copy Dockerfiles and docker-compose.yml'
       ansible.builtin.copy:
