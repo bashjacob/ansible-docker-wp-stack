@@ -1,0 +1,6 @@
+---
+- name: "Install docker core package - Debian"
+  ansible.builtin.apt:
+    update_cache: true
+    name: docker
+    state: present

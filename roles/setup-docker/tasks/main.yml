@@ -1,0 +1,15 @@
+---
+- name: "Docker setup - RedHat"
+  ansible.builtin.import_tasks: docker-core-redhat.yml
+  when: ansible_os_family == "RedHat"
+  notify:
+    - "Start and enable docker service"
+
+- name: "Docker setup - Debian"
+  ansible.builtin.import_tasks: docker-core-debian.yml
+  when: ansible_os_family == "Debian"
+  notify:
+    - "Start and enable docker service"
+
+- name: "Setup latest docker-compose"
+  ansible.builtin.import_tasks: install-compose.yml
