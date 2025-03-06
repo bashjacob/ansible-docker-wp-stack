@@ -1,0 +1,47 @@
+services:
+  wordpress:
+    build:
+      context: ./wordpress
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=${DB_USER}
+      - WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
+      - WORDPRESS_DB_NAME=${DB_NAME}
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - wordpress_network
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - wordpress_network
+
+networks:
+  wordpress_network:
+    name: wordpress
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.29.0.0/16
+          ip_range: 172.29.24.0/24
+
+volumes:
+  wordpress_data:
+  db_data:
