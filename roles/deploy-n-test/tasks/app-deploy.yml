@@ -1,0 +1,4 @@
+---
+- name: Deploy WordPress using Docker Compose
+  shell: cd /opt/wordpress && /usr/local/bin/docker-compose up -d
+  register: output

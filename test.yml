@@ -1,7 +1,0 @@
----
-- hosts: wp
-  become: true
-  gather_facts: true
-  roles:
-    - setup-docker
-    - copy-files

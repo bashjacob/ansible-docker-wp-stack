@@ -1,71 +1,9 @@
 ---
-- name: 'Deploy WordPress with docker on RedHat family OSes'
+- name: "Deploy WordPress with MariaDB using docker-compose"
   hosts: wp
-  gather_facts: true
   become: true
-  vars_files:  
-    - secrets.yml
-
-  tasks:
-  #   - name: 'Install required packages'
-  #     ansible.builtin.dnf:
-  #       name:
-  #         - docker
-  #         #- python3-pip
-  #       state: latest
-  #
-  #   - name: 'Download latest docker-compose'
-  #     ansible.builtin.get_url:
-  #       url: https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64
-  #       dest: /usr/local/bin/docker-compose
-  #       mode: '0755'
-  #
-  #   - name: 'Start and enable docker service'
-  #     ansible.builtin.service:
-  #       name: docker
-  #       state: started
-  #       enabled: true
-
-    # - name: 'Create project directory'
-    #   ansible.builtin.file:
-    #     path: "/opt/wordpress/{{ item }}"
-    #     state: directory
-    #   loop:
-    #     - ""
-    #     - wordpress
-    #     - db
-
-    - name: 'Copy Dockerfiles and docker-compose.yml'
-      ansible.builtin.copy:
-        src: "{{ item }}"
-        dest: "/opt/wordpress/{{ item }}"
-      loop:
-        - wordpress/Dockerfile
-        - db/Dockerfile
-        - docker-compose.yml
-    
-    - name: 'Create .env file from template'
-      ansible.builtin.template:
-        src: .env.j2
-        dest: /opt/wordpress/.env
-
-    # Using direct shell command with the standalone docker-compose binary
-    - name: Deploy WordPress using Docker Compose
-      shell: cd /opt/wordpress && /usr/local/bin/docker-compose up -d
-      register: output
-    
-    #- name: 'Deploy wordpress using docker-compose'
-      #community.docker.docker_compose_v2:
-        #project_src: /opt/wordpress
-        ##env_files: /tmp
-        #state: present
-      #register: output
-    
-    - name: 'Check if wordpress is running'
-      ansible.builtin.uri:
-        url: http://localhost:80
-        status_code: 200
-      register: result
-      until: result.status == 200
-      retries: 10
-      delay: 5
+  gather_facts: true
+  roles:
+    - setup-docker
+    - copy-files
+    - deploy-n-test
