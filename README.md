@@ -12,7 +12,7 @@ This project provides a simple way to deploy WordPress with MariaDB using Docker
 ### 2. Configure the deployment
 
 - Edit the `inventory.ini` file to include your server ip address and ssh details
-- Edit the `secrets.yml` with your desired database credentials (don't forget about ansible-vault!)
+- Edit the `roles/copy-files/vars/main.yml` with your desired database credentials (don't forget about ansible-vault!)
 
 ### 3. Run the deployment
 
