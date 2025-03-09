@@ -1,0 +1,5 @@
+---
+- name: "Deploy application"
+  ansible.builtin.import_tasks: app-deploy.yml
+  notify:
+    - "Check"

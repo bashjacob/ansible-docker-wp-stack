@@ -1,0 +1,9 @@
+---
+- name: "Check"
+  ansible.builtin.uri:
+    url: http://localhost:80
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 10
+  delay: 5

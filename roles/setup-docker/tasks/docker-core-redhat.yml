@@ -1,0 +1,5 @@
+---
+- name: "Install docker core package - RedHat"
+  ansible.builtin.dnf:
+    name: docker
+    state: present
