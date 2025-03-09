@@ -1,9 +1,0 @@
----
-- name: "Create project directory"
-  ansible.builtin.file:
-    path: "/opt/wordpress/{{ item }}"
-    state: directory
-  loop:
-    - ""
-    - wordpress
-    - db

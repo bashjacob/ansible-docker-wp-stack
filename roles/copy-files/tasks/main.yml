@@ -1,3 +1,6 @@
 ---
-- name: "Copy files and create template"
-  ansible.builtin.include_tasks: create-project-dir.yml
+- name: "Copy files"
+  ansible.builtin.include_tasks: copy-files.yml
+
+- name: "Create .env file"
+  ansible.builtin.include_tasks: create-env.yml
